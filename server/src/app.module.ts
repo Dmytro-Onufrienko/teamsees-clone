@@ -24,15 +24,18 @@ const DateTimeScalar = new GraphQLScalarType({
 });
 
 @Module({
-  imports: [GraphQLModule.forRoot({
-    typePaths: ['./**/*.graphql'],
-    driver: ApolloDriver,
-    resolvers: { DateTime: DateTimeScalar },
-    subscriptions: {
-      'graphql-ws': true,
-      'subscriptions-transport-ws': true
-    },
-  }), DonationsModule],
+  imports: [
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      driver: ApolloDriver,
+      resolvers: { DateTime: DateTimeScalar },
+      subscriptions: {
+        'graphql-ws': true,
+        'subscriptions-transport-ws': true,
+      },
+    }),
+    DonationsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
