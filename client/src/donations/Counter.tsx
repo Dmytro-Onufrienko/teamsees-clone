@@ -1,5 +1,5 @@
 import { animate } from "framer-motion";
-import { FC, useEffect, useRef } from "react";
+import { FC, LegacyRef, useEffect, useRef } from "react";
 
 type CounterProps = { from: number; to: number };
 
@@ -12,14 +12,14 @@ const Counter: FC<CounterProps> = ({ from, to }) => {
     const controls = animate(from, to, {
       duration: 1,
       onUpdate(value) {
-        node.textContent = value.toFixed(2);
+        node.textContent = parseInt(value.toFixed(2)).toLocaleString();
       },
     });
 
     return () => controls.stop();
   }, [from, to]);
 
-  return <p ref={nodeRef} />;
+  return <p ref={nodeRef as LegacyRef<HTMLParagraphElement> | undefined} />;
 };
 
 export default Counter;
