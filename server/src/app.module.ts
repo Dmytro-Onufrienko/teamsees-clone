@@ -5,6 +5,8 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { DonationsModule } from './donations/donations.module';
 import { GraphQLScalarType, Kind } from 'graphql';
+import { PaymentController } from './payment/payment.controller';
+import { PaymentService } from './payment/payment.service';
 
 const DateTimeScalar = new GraphQLScalarType({
   name: 'DateTime',
@@ -36,7 +38,7 @@ const DateTimeScalar = new GraphQLScalarType({
     }),
     DonationsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, PaymentController],
+  providers: [AppService, PaymentService],
 })
 export class AppModule {}
