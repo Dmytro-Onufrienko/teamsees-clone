@@ -7,6 +7,8 @@ import { DonationsModule } from './donations/donations.module';
 import { GraphQLScalarType, Kind } from 'graphql';
 import { PaymentController } from './payment/payment.controller';
 import { PaymentService } from './payment/payment.service';
+import { ConfigModule } from '@nestjs/config';
+import { join } from 'path';
 
 const DateTimeScalar = new GraphQLScalarType({
   name: 'DateTime',
@@ -37,6 +39,9 @@ const DateTimeScalar = new GraphQLScalarType({
       },
     }),
     DonationsModule,
+    ConfigModule.forRoot({
+      envFilePath: join(__dirname, '..', '.env'),
+    }),
   ],
   controllers: [AppController, PaymentController],
   providers: [AppService, PaymentService],

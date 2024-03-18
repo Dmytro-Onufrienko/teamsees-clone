@@ -4,22 +4,23 @@ import { FC, useState } from 'react';
 
 const createPaymentIntent = async () => {
   try {
-    const response = await fetch('https://api.stripe.com/v1/payment_intents', {
+    const params = new URLSearchParams();
+    params.append('amount', '100');
+    params.append('currency', 'usd');
+
+    const response = await fetch(process.env.REACT_APP_STRIPE_PAYMENT_INTENTS || "", {
       method: 'POST',
       headers: {
-        'Authorization': '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',
-        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.REACT_APP_STRIPE_TEST_SECRET_KEY || ""}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({
-        amount: 100,
-        currency: 'usd',
-      }),
+      body: params.toString(),
     });
     
     const data = await response.json();
     return data.client_secret;
   } catch (error) {
-    console.error('Помилка при створенні платежного інтенту:', error);
+    console.error('Payment error: ', error);
     throw error;
   }
 }
@@ -50,15 +51,15 @@ const Donation: FC = () => {
       elements,
       clientSecret,
       confirmParams: {
-        return_url: 'https://example.com/order/123/complete',
+        return_url: 'http://localhost:8000/log',
       },
     });
 
     if (paymentReuslt?.error) {
       setErrorMessage(paymentReuslt.error.message);
-    } else {
-
     }
+
+    await fetch(`http://localhost:8000/log?data=${JSON.stringify(paymentReuslt)}`);
   };
 
   return (
