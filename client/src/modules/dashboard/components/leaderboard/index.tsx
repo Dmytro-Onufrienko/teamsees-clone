@@ -34,7 +34,7 @@ const Leaderboard: FC<ILeaderboardProps> = ({ }) => {
           LEADERBOARD
         </Heading>
         <VStack
-          p={5} gap={5} width='75%'
+          p={5} gap={5} width='100%'
         >
           {data ? data.donations?.map((donation: IDonation) => (
               <LeaderboardItem key={donation.id} donation={donation} />
