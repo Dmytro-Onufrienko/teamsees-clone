@@ -1,23 +1,9 @@
-import { Box, Heading, VStack } from "@chakra-ui/react";
+import { Box, Heading, Radio, RadioGroup, Stack, VStack } from "@chakra-ui/react";
 import { FC } from "react";
 import LeaderboardItem from "./LeaderboardItem";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { IDonation } from "../../../../types";
-
-const TotalDonationsQuery = gql`
-  query Donations {
-    donations {
-        id
-        count
-        name
-        email
-        phoneNumber
-        team
-        message
-        createdAt
-    }
-  }
-`;
+import { TotalDonationsQuery } from "../../gql/queries";
 
 interface ILeaderboardProps { }
 
@@ -41,7 +27,6 @@ const Leaderboard: FC<ILeaderboardProps> = ({ }) => {
             )) : ""}
         </VStack>
       </>
-
     </Box>
   )
 }
